@@ -1,0 +1,2 @@
+export { ThesisPage } from "./Layout";
+

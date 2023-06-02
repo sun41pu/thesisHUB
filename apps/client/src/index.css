@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+        line-height: 1.5;
+        font-weight: 400;
+
+        font-synthesis: none;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-text-size-adjust: 100%;
+
+    }
+
+    #root {
+        @apply h-full
+    }
+
+    html {
+        @apply h-full
+    }
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        @apply h-full bg-gradient-to-br from-white to-neutral-100
+    }
+
+    h1 {
+        @apply text-4xl font-bold;
+    }
+
+    h2 {
+        @apply text-3xl font-bold;
+    }
+
+    h3 {
+        @apply text-2xl font-bold;
+    }
+
+    h4 {
+        @apply text-xl font-bold;
+    }
+
+    [type="checkbox"],
+    [type="radio"] {
+        @apply border-gray-300 focus:ring-blue-500 h-5 text-blue-600 w-5;
+    }
+
+    [type="checkbox"] {
+        @apply rounded;
+    }
+
+    [type="radio"] {
+        @apply rounded-full;
+    }
+}
+
+@layer components {
+    .primary-input {
+        @apply appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm
+    }
+
+    .primary-button {
+        @apply tr resp w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+    }
+
+    .primary-button:disabled:hover {
+        animation: shake 0.4s ease;
+        @apply bg-red-400 opacity-100
+    }
+
+    .loading-button {
+
+        @apply tr primary-input relative overflow-hidden bg-neutral-400 text-white
+    }
+    .loading-button:hover{
+
+        opacity: 0.7 !important;
+        cursor: progress;
+        @apply bg-neutral-500
+    }
+    .loading-button::after {
+      content: '';
+      @apply absolute inset-0 bg-gradient-to-r from-transparent via-neutral-300 to-transparent animate-[shimmer_1s_infinite]
+    }
+
+}
+
+@layer utilities {
+    .noselect {
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none;
+        /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+    }
+
+    .CONTENT {
+        @apply mx-auto container
+    }
+
+    .tr {
+        @apply transform transition
+    }
+
+    .resp {
+        @apply hover:-scale-hover active:-scale-tap
+    }
+
+    .input-error {
+        outline: solid 1px red;
+        @apply bg-neutral-200
+    }
+
+    @keyframes shine {
+        0% {
+            background-position: -200% center
+        }
+        to {
+            background-position: 200% center
+        }
+    }@keyframes shake {
+         10%, 90% {
+             transform: translate3d(-1px, 0, 0)
+         }
+         20%, 80% {
+             transform: translate3d(2px, 0, 0)
+         }
+         30%, 50%, 70% {
+             transform: translate3d(-4px, 0, 0)
+         }
+         40%, 60% {
+             transform: translate3d(4px, 0, 0)
+         }
+     }
+
+}
+

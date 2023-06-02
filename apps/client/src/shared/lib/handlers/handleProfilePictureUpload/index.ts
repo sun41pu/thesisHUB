@@ -1,0 +1,1 @@
+export { handleProfilePictureUpload } from "./handleProfilePictureUpload";
