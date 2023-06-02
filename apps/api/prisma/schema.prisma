@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Comment {
+  id        Int             @id @unique @default(autoincrement())
+  text      String
+  authorId  String
+  createdAt DateTime        @default(now())
+  parent_id Int?
+  thesisId  Int
+  updatedAt DateTime        @updatedAt
+  author    User            @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  parent    Comment?        @relation("ParentChildren", fields: [parent_id], references: [id], onDelete: Cascade)
+  children  Comment[]       @relation("ParentChildren")
+  Thesis    Thesis          @relation(fields: [thesisId], references: [id], onDelete: Cascade)
+  upvotes   CommentUpvote[]
+}
+
+model CommentUpvote {
+  userId    String
+  commentId Int
+  Comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, commentId])
+}
+
+model User {
+  id             String          @id @unique @default(uuid())
+  username       String
+  email          String          @unique
+  hashedPassword String
+  roleId         Int             @default(1)
+  Picture        String?
+  Comments       Comment[]
+  CommentUpvote  CommentUpvote[]
+  Authorsip      Thesis[]        @relation("authorship")
+  Reviewer       Thesis?         @relation("review")
+  role           UserRoles       @relation(fields: [roleId], references: [id])
+}
+
+model UserRoles {
+  id   Int    @id @unique @default(autoincrement())
+  name String
+  User User[]
+}
+
+model Thesis {
+  id                Int           @id @default(autoincrement())
+  name              String
+  description       String
+  short_description String?
+  picture           String?
+  upvotes           Int           @default(0)
+  authorId          String?
+  createdAt         DateTime      @default(now())
+  updateAt          DateTime?     @updatedAt
+  fileLinks         String[]
+  reviewrId         String?       @unique
+  statusId          Int?          @default(1)
+  Comments          Comment[]
+  author            User?         @relation("authorship", fields: [authorId], references: [id], onDelete: Cascade)
+  reviewer          User?         @relation("review", fields: [reviewrId], references: [id])
+  status            ThesisStatus? @relation(fields: [statusId], references: [id])
+}
+
+model ThesisStatus {
+  id     Int      @id @unique @default(autoincrement())
+  name   String
+  Thesis Thesis[]
+}
+
+model Tags {
+  id  Int    @id @default(autoincrement())
+  tag String
+}
