@@ -13,6 +13,7 @@ import { PrismaService } from "../prisma/prisma.service";
 import {DevtoolsModule} from "@nestjs/devtools-integration";
 
 @Module({
+
     imports: [
       PrismaModule,
       ServeStaticModule.forRoot({
