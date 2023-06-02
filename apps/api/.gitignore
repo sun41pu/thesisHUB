@@ -2,4 +2,3 @@
 /node_modules
 /packages
 /prisma/migrations/*
-/prisma/schema.prisma
